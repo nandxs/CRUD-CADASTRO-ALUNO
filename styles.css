@@ -1,0 +1,246 @@
+body {
+    background-color: #7b9fed;
+    border: 15px solid;
+    border-color: #2754b6;
+    border-radius: 20px;
+    margin: 0;
+    padding: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.cabecalho {
+display: flex;
+font-size: 30px; 
+align-items: center;
+margin-left: 280px;
+text-decoration: underline;
+
+}
+
+.imgcabecalho {
+    height: 180px;
+}
+
+
+.introducao {
+
+    font-size: 20px;
+}
+.container-botao {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px; /* Espaçamento opcional */
+}
+
+.botaocadastro {
+    border-radius: 20px;
+    font-size: 23px;
+    background-color: #172f63;
+    color: white;
+    cursor: pointer;
+    border:#172f63;
+    padding: 10px;
+    transition: 0.3s;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.botaocadastro:hover {
+    background-color: #5579c7;
+}
+
+.CadAluno {
+    font-size: 30px;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: underline;
+}
+
+.dadosaluno {
+
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#botaonome {
+
+    text-align: center;
+    border: 0;
+    border-radius: 15px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#botaocpf {
+
+    text-align: center;
+    border: 0;
+    border-radius: 15px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+
+#botaoendereco {
+
+    text-align: center;
+    border: 0;
+    border-radius: 15px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    transition: background-color 0.3s;
+    
+}
+
+#botaotel {
+
+    text-align: center;
+    border: 0;
+    border-radius: 15px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    transition: background-color 0.3s;
+    
+}
+
+#botaodat {
+
+    text-align: center;
+    border: 0;
+    border-radius: 15px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    transition: background-color 0.3s;
+    
+}
+
+
+label {
+
+    font-size: 28px;
+}
+
+.botaoAlunoCad {
+
+    text-align: center;
+    border-radius: 15px;
+    padding: 10px 20px;
+    margin-top: 16px;
+    font-size: 16px;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+#botaoenviar{
+
+    border-radius: 20px;
+    font-size: 23px;
+    background-color: #172f63;
+    color: white;
+    cursor: pointer;
+    border:#172f63;
+    padding: 10px;
+    transition: 0.3s;
+    margin: 0;
+}
+
+#botaoenviar:hover {
+    background-color: #5579c7;
+}
+
+#botaoreset{
+
+    border-radius: 20px;
+    font-size: 23px;
+    background-color: #172f63;
+    color: white;
+    cursor: pointer;
+    border:#172f63;
+    padding: 10px;
+    transition: 0.3s;
+    display: inline-block;
+    margin: 0;
+}
+
+#botaoreset:hover {
+    background-color: #5579c7;
+}
+
+.alunos-container {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.aluno {
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+.aluno p {
+    margin: 5px 0;
+}
+
+.aluno button {
+    background-color: #172f63;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.aluno button:hover {
+    background-color: #5579c7;
+}
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close-btn {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            float: right;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+

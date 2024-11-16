@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alunos Cadastrados - WebEdu</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="logo.png">
+</head>
+<body>
+    <div class="cabecalho">
+        <h1> WebEdu - Cursos Profissionalizantes </h1>
+        <img class="imgcabecalho" src="logo.png" alt="LogoWebEdu">
+    </div>
+
+    <div class="CadAluno"> 
+        <h2> Alunos Cadastrados </h2>
+    </div>
+
+    <div class="alunos-container">
+   
+    </div>
+
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="fecharModal()">×</span>
+            <h3 id="modal-titulo">Detalhes do Aluno</h3>
+            <form id="form-aluno">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" required><br><br>
+                <label for="cpf">CPF:</label>
+                <input type="text" id="cpf" name="cpf" required><br><br>
+                <label for="endereco">Endereço:</label>
+                <input type="text" id="endereco" name="endereco" required><br><br>
+                <label for="data_nasc">Data de Nascimento:</label>
+                <input type="date" id="data_nasc" name="data_nasc" required><br><br>
+                <button type="button" onclick="salvarAlteracoes()">Salvar Alterações</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let alunoEditando = null;
+
+        async function carregarAlunos() {
+            try {
+                const response = await fetch('http://localhost:3000/listar_alunos');
+                const alunos = await response.json();
+                const alunosContainer = document.querySelector('.alunos-container');
+                alunosContainer.innerHTML = '';
+
+                if (alunos.length === 0) {
+                    alunosContainer.innerHTML = '<p>Nenhum aluno cadastrado.</p>';
+                    return;
+                }
+
+                alunos.forEach(aluno => {
+                    const alunoDiv = document.createElement('div');
+                    alunoDiv.classList.add('aluno');
+                    alunoDiv.innerHTML = `
+                        <p><strong>Nome:</strong> ${aluno.Nome}</p>
+                        <p><strong>CPF:</strong> ${aluno.CPF}</p>
+                        <p><strong>Endereço:</strong> ${aluno.Endereco}</p>
+                        <p><strong>Data de Nascimento:</strong> ${aluno.Data_nasc}</p>
+                        <button onclick="visualizarAluno(${aluno.id})">Visualizar</button>
+                        <button onclick="editarAluno(${aluno.id})">Editar</button>
+                        <button onclick="deletarAluno(${aluno.id})">Deletar</button>
+                    `;
+                    alunosContainer.appendChild(alunoDiv);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar alunos:', error);
+            }
+        }
+
+        function visualizarAluno(id) {
+            fetch(`http://localhost:3000/listar_aluno/${id}`)
+                .then(response => response.json())
+                .then(aluno => {
+                    document.getElementById('modal-titulo').innerText = 'Detalhes do Aluno';
+                    document.getElementById('nome').value = aluno.Nome;
+                    document.getElementById('cpf').value = aluno.CPF;
+                    document.getElementById('endereco').value = aluno.Endereco;
+                    document.getElementById('data_nasc').value = aluno.Data_nasc;
+                    alunoEditando = aluno; 
+                    abrirModal();
+                })
+                .catch(error => console.error('Erro ao visualizar aluno:', error));
+        }
+
+        function editarAluno(id) {
+            fetch(`http://localhost:3000/listar_aluno/${id}`)
+                .then(response => response.json())
+                .then(aluno => {
+                    document.getElementById('modal-titulo').innerText = 'Editar Aluno';
+                    document.getElementById('nome').value = aluno.Nome;
+                    document.getElementById('cpf').value = aluno.CPF;
+                    document.getElementById('endereco').value = aluno.Endereco;
+                    document.getElementById('data_nasc').value = aluno.Data_nasc;
+                    alunoEditando = aluno; 
+                    abrirModal();
+                })
+                .catch(error => console.error('Erro ao editar aluno:', error));
+        }
+
+        async function salvarAlteracoes() {
+    if (!alunoEditando) {
+        alert("Nenhum aluno selecionado para editar.");
+        return;
+    }
+
+    const nome = document.getElementById('nome').value;
+    const cpf = document.getElementById('cpf').value;
+    const endereco = document.getElementById('endereco').value;
+    const data_nasc = document.getElementById('data_nasc').value;
+
+    const alunoAlterado = { 
+        nomealuno: nome, 
+        cpfaluno: cpf, 
+        endealuno: endereco, 
+        nascaluno: data_nasc 
+    };
+
+    try {
+        const response = await fetch(`http://localhost:3000/editar_aluno/${alunoEditando.id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(alunoAlterado)
+        });
+
+        if (response.ok) {
+            alert('Aluno editado com sucesso!');
+            fecharModal();
+            carregarAlunos();
+        } else {
+            const errorText = await response.text();
+            alert(`Erro ao editar aluno: ${errorText}`);
+        }
+    } catch (error) {
+        console.error('Erro ao tentar salvar alterações:', error);
+    }
+}
+
+        async function deletarAluno(id) {
+            const confirmar = confirm("Tem certeza que deseja deletar este aluno?");
+            if (confirmar) {
+                try {
+                    const response = await fetch(`http://localhost:3000/deletar_aluno/${id}`, {
+
+                        method: 'DELETE'
+});
+                    if (response.ok) {
+                        alert('Aluno deletado com sucesso!');
+                        carregarAlunos();
+                    } else {
+                        alert('Erro ao deletar aluno.');
+                    }
+                } catch (error) {
+                    console.error('Erro ao tentar deletar aluno:', error);
+                    alert('Erro ao tentar deletar aluno.');
+                }
+            }
+        }
+
+        function abrirModal() {
+            document.getElementById('modal').style.display = 'block';
+        }
+
+        function fecharModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        window.onload = carregarAlunos;
+    </script>
+
+</body>
+</html>
